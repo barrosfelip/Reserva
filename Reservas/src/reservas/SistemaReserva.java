@@ -1,18 +1,34 @@
 
 package reservas;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Date;
+import java.util.*
 
 
 public class SistemaReserva {
     private static final Scanner teclado = new Scanner(System.in);
     
 // ===================== Metodos ===========================
+    public static void limpaTela(){
+        for (int i=0;i<10;i++){
+        System.out.print("\r\n");
+        }}
+    
+    public static void login(){
+            System.out.println(" _____ SISTEMA DE RESERVAS _____");
+            System.out.println("|                               |");
+            System.out.println("|------- TELA DE LOGIN ---------|");
+            System.out.println("|                               |");
+            System.out.println("|       DIGITE SUA SENHA        |");
+            System.out.println("|                               |");
+            System.out.println("|                               |");
+            System.out.println("| 0 - SAIR                      |");            
+            System.out.println("|_______________________________|");
+    }
+    
     public static void menu(){
             System.out.println(" ____________ MENU _____________");
             System.out.println("| 0 - Sair                      |");
@@ -89,9 +105,6 @@ public class SistemaReserva {
         //System.out.println(data.getDate());
     
         
-                
-        
-        
         ArrayList<Pessoa> listaPessoa = new ArrayList<>();
         ArrayList<Equipamento> listaEquipamento = new ArrayList<>();
         ArrayList<Datashow> listaDatashow = new ArrayList<>();
@@ -99,9 +112,9 @@ public class SistemaReserva {
         ArrayList<Reserva> listaReserva = new ArrayList<>();
         ArrayList<Emprestimo> listaEmprestimo = new ArrayList<>();
                 
-        listaPessoa.add(new Pessoa("Pedro Henrique", "Pedroh", true));
-        listaPessoa.add(new Pessoa("Thiago Pereira", "Thiagop", true));
-        listaPessoa.add(new Pessoa("Arthur Morais", "Arthurm", true));
+        listaPessoa.add(new Pessoa("Pedro", "pedroh", true));
+        listaPessoa.add(new Pessoa("Thiago", "fhiagop", true));
+        listaPessoa.add(new Pessoa("Felipe", "felipel", true));
         
        
         listaDatashow.add( new Datashow(18000, "Epson",false, 3000));
@@ -118,11 +131,26 @@ public class SistemaReserva {
         listaReserva.add( new Reserva(listaPessoa.get(1),listaNotebook.get(3), listaDatashow.get(3), dataRetirada, dataEntrega,"nd"));
         listaReserva.add( new Reserva(listaPessoa.get(2),listaNotebook.get(1), dataRetirada, dataEntrega,"n"));
         
+        boolean login = true, run = true;
+        SistemaReserva.limpaTela();
+        while(login){ 
+        SistemaReserva.login();
+        String key = teclado.next();
+        for (int i = 0; i < listaPessoa.size(); i++) {
+            if (key.equals(listaPessoa.get(i).getRedeUser())) {
+               login = false;}
+            if (key.equals("0")){
+                login= false;
+                run=false;  } }
+        if(login==true){
+            SistemaReserva.limpaTela();
+            System.out.println("|        SENHA INCORRETA        |");}
+        }
+ 
         
-        
-        boolean run = true;
         while (run) {
             //MENU PRINCIPAL
+            SistemaReserva.limpaTela();
             SistemaReserva.menu(); 
             int op = teclado.nextInt();
             switch (op){
