@@ -4,7 +4,6 @@ package reservas;
 import java.util.ArrayList;
 
 
-
 public class Pessoa {
         
     public ArrayList<Pessoa> listaPessoa = new ArrayList<>();
@@ -12,13 +11,13 @@ public class Pessoa {
     private int id;
     private String nome;
     private String redeUser;
-    private boolean adm;
+    private int permis;
 
-    public Pessoa(String nome, String redeUser, boolean adm) {
+    public Pessoa(String nome, String redeUser, int permis) {
         this.id = Pessoa.sequence++; 
         this.nome = nome;
         this.redeUser = redeUser;
-        this.adm = adm;
+        this.permis = permis;
         
     }
     
@@ -48,11 +47,11 @@ public class Pessoa {
         this.redeUser = redeUser;
     }
 
-    public boolean getAdm() {
-        return adm;
+    public int getPermis() {
+        return permis;
     }
 
-    public void setAdm(boolean adm) {
-        this.adm = adm;
+    public void setPermis(int permis) {
+        this.permis = permis;
     }
 }

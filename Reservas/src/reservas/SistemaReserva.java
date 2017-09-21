@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Date;
-import java.util.*
-
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class SistemaReserva {
     private static final Scanner teclado = new Scanner(System.in);
@@ -77,7 +81,18 @@ public class SistemaReserva {
             System.out.println("| 4 - Excluir                   |");
             System.out.println("|_______________________________|");
             System.out.print(" Opção: ");     
+    }
+    public static void subMenuTipoColaborador(){
+            System.out.println("");
+            System.out.println(" _________ COLABORADOR _________"); 
+            System.out.println("| 0 - Sair                      |");
+            System.out.println("| 1 - Comun                     |");
+            System.out.println("| 2 - Diretor                   |");
+            System.out.println("| 3 - Administrador             |");
+            System.out.println("|_______________________________|");
+            System.out.print(" Opção: ");     
     }/*
+    /*
     public static void cadastrarColaborador(String name , String user , boolean adm,String pass) throws IOException{
         try ( // ================== ESCREVER EM TXT ===========================
             FileWriter arq = new FileWriter("C:\\Users\\Pedro Henrique\\Google Drive\\Java\\POO\\Reserva\\Arquivo\\colaborador.txt",true)) {
@@ -112,9 +127,9 @@ public class SistemaReserva {
         ArrayList<Reserva> listaReserva = new ArrayList<>();
         ArrayList<Emprestimo> listaEmprestimo = new ArrayList<>();
                 
-        listaPessoa.add(new Pessoa("Pedro", "pedroh", true));
-        listaPessoa.add(new Pessoa("Thiago", "fhiagop", true));
-        listaPessoa.add(new Pessoa("Felipe", "felipel", true));
+        listaPessoa.add(new Pessoa("Pedro", "pedroh", 0));
+        listaPessoa.add(new Pessoa("Thiago", "fhiagop", 0));
+        listaPessoa.add(new Pessoa("Felipe", "felipel", 0));
         
        
         listaDatashow.add( new Datashow(18000, "Epson",false, 3000));
@@ -150,7 +165,6 @@ public class SistemaReserva {
         
         while (run) {
             //MENU PRINCIPAL
-            SistemaReserva.limpaTela();
             SistemaReserva.menu(); 
             int op = teclado.nextInt();
             switch (op){
@@ -377,35 +391,56 @@ public class SistemaReserva {
                             break;
                         case 2:    
                             // SUB MENU CADASTRAR
-                            System.out.println(" ______ CCADASTRAR PESSOA ______");                             
-                            System.out.print("| NOME: ");
-                            String name = teclado.next();
-                            System.out.print("| Usuario S/N: ");
-                            String selc = teclado.next();
-                            if ("s".equals(selc)){
-                            
-                                boolean adm = true;
-                                System.out.print("| Usuario: ");
-                                String user = teclado.next();
-                                System.out.print("| Senha: ");
-                                String pass = teclado.next();
-                                System.out.print("| Confirmar senha:");
-                                String conpass = teclado.next();
-                                System.out.println("|_______________________________|");
-                                    if (pass.equals(conpass)){
-                                        listaPessoa.add(new Pessoa(name,user,adm));
-                                       //
-                                      cadastrarColaborador(name,user,adm,pass);
-                                            
-                                    }else{
-                                        System.out.println("Senhas Não correspomdem");
-                                    }
-                            }else{
-                                listaPessoa.add(new Pessoa(name,"",false));
-                         
+                            int op5=0;
+                            String name = null, pass=null;
+                            while(op5<1||op5>=3){
+                                SistemaReserva.subMenuTipoColaborador();
+                            op5 = teclado.nextInt();
+                            if (op5==0){
+                                break;
+                                }
+                            if (op5==0){
+                                break;}
+                            boolean cadastro=true;
+                            while(cadastro){
+                            System.out.println(" ______ CADASTRAR PESSOA ______");                             
+                            System.out.print("| Nome: ");
+                            name = teclado.next();
+                            int cont= 0;
+                            for (int i = 0; i < listaPessoa.size(); i++){
+                                if(name.equals(listaPessoa.get(i).getNome())){
+                                     cont++;
+                                        }}
+                                if (cont ==0){
+                                    cadastro=false;}
+                                else
+                                    {System.out.println("|       NOME JA CADASTRADO       |"); }
                             }
+                            cadastro=true;
                             
-                            // FIM SUB MENU CADASTRAR                       
+                            while(cadastro){
+                            System.out.print("| Senha: ");
+                            pass = teclado.next();
+                            System.out.print("| Confirmar senha:");
+                            String conpass = teclado.next();
+                            if (pass.equals(conpass)){
+                                int cont= 0;
+                                for (int i = 0; i < listaPessoa.size(); i++) {
+                                    if (pass.equals(listaPessoa.get(i).getRedeUser())) {
+                                        cont++;
+                                        }}
+                                if (cont ==0){
+                                    cadastro=false;                                      
+                                    listaPessoa.add(new Pessoa(name,pass,op3));
+                                    break;
+                                
+                                }
+                                else {System.out.println("|      ESCOLHA OUTRA SENHA      |");}}
+                            else
+                                {System.out.println("|        SENHA INCORRETA         |");}}
+                            
+                            }
+                         
                             break;
                         case 3:
                             //SUB MENU EDITAR
@@ -423,16 +458,11 @@ public class SistemaReserva {
                             System.out.print("MAT: ");
                             int mat = teclado.nextInt();
                             System.out.println(listaPessoa.get(mat).getNome());
-                            System.out.println("Deseja editar ?");
-                            System.out.print("S/N: ");
-                            String selc2 = teclado.next();
-                            if ("s".equals(selc2)){
+                            
                                 System.out.println("0 - Cancelar");
-                                System.out.println("1 - Matricula");
-                                System.out.println("2 - Nome");
-                                System.out.println("3 - Permissao");
-                                System.out.println("4 - Usuario");
-                                System.out.println("5 - Senha");
+                                System.out.println("1 - Nome");
+                                System.out.println("2 - Permissao");
+                                System.out.println("3 - Senha");
                                 
                                 
                                 int op4 = teclado.nextInt();
@@ -440,17 +470,7 @@ public class SistemaReserva {
                                 switch (op4){
                                     case 0:
                                         break;
-                                    case 1:
-                                        //EDITAR MATRICULA
-                                        System.out.println("Matricula Atual: "+listaPessoa.get(mat).getId());
-                                        System.out.print("Matricula Nova : ");
-                                        int newmat = teclado.nextInt();
-                                        listaPessoa.get(mat).setId(newmat);
-                                        System.out.println("Matricula Atualizada: "+listaPessoa.get(mat).getId());
-                                        
-                                        //FIM EDITAR MATRICULA
-                                        break;
-                                    case 2:   
+                                    case 1:   
                                         //EDITAR NOME
                                         System.out.println("Nome Atual: "+listaPessoa.get(mat).getNome());
                                         System.out.print("Nome Novo : ");
@@ -459,25 +479,51 @@ public class SistemaReserva {
                                         System.out.println("Nome Atualizado: "+listaPessoa.get(mat).getNome());
                                         //FIM EDITAR NOME
                                         break;
-                                    case 3:
+                                    case 2:
                                         //EDITAR PERMISSÂO
-                                        if (listaPessoa.get(mat).getAdm() == true){
-                                            System.out.println("Retirar Permissão S/N: ");
+                                       System.out.println("Permissão Atual: "+listaPessoa.get(mat).getPermis());
+                                       System.out.print("Permissão Nova : ");
+                                       int newperm = teclado.nextInt();
+                                       listaPessoa.get(mat).setPermis(newperm);
+                                       System.out.println("Permissão Atualizada: "+listaPessoa.get(mat).getPermis());
                                             
                                             
-                                        }
+                                        
                                         // FIM EDITAR PERMISSAO
                                         break;
-                                    case 4:
-                                        //EDITAR USUARIO
-                                        
-                                        //FIM EDITAR USUARIO
-                                    case 5:
+                                
+                                    case 3:
                                         //EDITA SENHA
-                                        //FIM EDITAR SENHA
+                                       System.out.println("Senha Atual: "+listaPessoa.get(mat).getRedeUser());
+                                       boolean senha = true;
+                                       while(senha){
+                                       System.out.print("Senha Nova : ");
+                                        pass = teclado.next();
+                                        System.out.print("| Confirmar senha:");
+                                        String conpass = teclado.next();
+                                        if (pass.equals(conpass)){
+                                            int cont= 0;
+                                        for (int i = 0; i < listaPessoa.size(); i++) {
+                                        if (pass.equals(listaPessoa.get(i).getRedeUser())) {
+                                            cont++;
+                                            }}
+                                         if (cont ==0){
+                                            senha=false;   
+                                            listaPessoa.get(mat).setRedeUser(pass);
+
+                                }
+                                else {System.out.println("|      ESCOLHA OUTRA SENHA      |");}}
+                            else
+                                {System.out.println("|        SENHA INCORRETA         |");}
+                            
+                            System.out.println("Senha Atualizada: "+listaPessoa.get(mat).getRedeUser());
+                                       }
+                            
+                                       break;
+//FIM EDITAR SENHA
                                     default:        
                                 
-                                }
+                                
                                  
                             }
                             
