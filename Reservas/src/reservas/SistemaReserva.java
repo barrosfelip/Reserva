@@ -33,16 +33,24 @@ public class SistemaReserva {
             System.out.println("|_______________________________|");
     }
     
-    public static void menu(){
-            System.out.println(" ____________ MENU _____________");
-            System.out.println("| 0 - Sair                      |");
-            System.out.println("| 1 - Reserva                   |");
+    public static void menu(int permis){
+                
+        if (permis == 0 || permis == 1 || permis == 2){
+        System.out.println(" ____________ MENU _____________");
+        System.out.println("| 0 - Sair                      |");
+        System.out.println("| 1 - Reserva                   |");
+            if (permis == 1 || permis == 2){
             System.out.println("| 2 - Equipamentos              |");
             System.out.println("| 3 - Colaborador               |");
-            System.out.println("| 4 - Emprestimo                |");            
-            System.out.println("|_______________________________|");
-            System.out.print(" Opção: ");    
+            System.out.println("| 4 - Emprestimo                |");
+            }else if (permis == 2 ) {
+            System.out.println("| 5 - Relatorio                 |"); 
+            }
+         System.out.println("|_______________________________|");
+         System.out.print(" Opção: ");    
        }
+    }
+    
     public static void subMenuEmprestimo(){
             System.out.println(" ____________ MENU _____________");
             System.out.println("| 0 - Sair                      |");
@@ -128,8 +136,8 @@ public class SistemaReserva {
         ArrayList<Emprestimo> listaEmprestimo = new ArrayList<>();
                 
         listaPessoa.add(new Pessoa("Pedro", "pedroh", 0));
-        listaPessoa.add(new Pessoa("Thiago", "fhiagop", 0));
-        listaPessoa.add(new Pessoa("Felipe", "felipel", 0));
+        listaPessoa.add(new Pessoa("Thiago", "thiagop", 1));
+        listaPessoa.add(new Pessoa("Felipe", "felipel", 2));
         
        
         listaDatashow.add( new Datashow(18000, "Epson",false, 3000));
@@ -151,21 +159,33 @@ public class SistemaReserva {
         while(login){ 
         SistemaReserva.login();
         String key = teclado.next();
+        int permis =0;
         for (int i = 0; i < listaPessoa.size(); i++) {
             if (key.equals(listaPessoa.get(i).getRedeUser())) {
-               login = false;}
+               permis = (listaPessoa.get(i).getPermis()); 
+               login = false;
+               
+            }
+               
             if (key.equals("0")){
                 login= false;
-                run=false;  } }
+                run=false;  
+            } 
+                
+        }
+        SistemaReserva.menu(permis);
+        
+        
         if(login==true){
             SistemaReserva.limpaTela();
-            System.out.println("|        SENHA INCORRETA        |");}
+            System.out.println("|        SENHA INCORRETA        |");
+        }
         }
  
-        
+         
         while (run) {
             //MENU PRINCIPAL
-            SistemaReserva.menu(); 
+            
             int op = teclado.nextInt();
             switch (op){
 
@@ -173,6 +193,7 @@ public class SistemaReserva {
                     run = false;
                    
                     break;
+                
                 case 1:
                     //SUB MENU RESERVA
                     SistemaReserva.subMenuReserva();
