@@ -51,52 +51,79 @@ public class SistemaReserva {
        }
     }
     
-    public static void subMenuEmprestimo(){
+    public static void subMenuEmprestimo(int permis){
+        if (permis == 1 || permis == 2){
             System.out.println(" ____________ MENU _____________");
             System.out.println("| 0 - Sair                      |");
             System.out.println("| 1 - Retirar Equipamento       |");
-            System.out.println("| 2 - Devolver Equipamento      |");           
-            System.out.println("|_______________________________|");
-            System.out.print(" Opção: ");    
-       }
-    public static void subMenuReserva(){
+            System.out.println("| 2 - Devolver Equipamento      |");
+        }else if (permis == 0){
+            System.out.println("Opão invalida Acesso Negado !");
+        }     
+        System.out.println("|_______________________________|");
+        System.out.print(" Opção: ");    
+        }
+        
+    public static void subMenuReserva(int permis){
+        if (permis == 0 || permis == 1 || permis == 2){
             System.out.println(" __________ RESERVA ____________");
             System.out.println("| 0 - Sair                      |");
             System.out.println("| 1 - Listar                    |");
+            if (permis == 1 || permis == 2){
             System.out.println("| 2 - Criar                     |");
+                if (permis == 2 ){
             System.out.println("| 3 - Editar                    |");
             System.out.println("| 4 - Excluir                   |");
-            System.out.println("|_______________________________|");
-            System.out.print(" Opção: ");
+                }
+        System.out.println("|_______________________________|");
+        System.out.print(" Opção: ");
+            }
+        }
     }
-    public static void subMenuEquipamentos(){
-            System.out.println(" ________ EQUIPAMENTOS _________");
-            System.out.println("| 0 - Sair                      |");
+    public static void subMenuEquipamentos(int permis){
+        System.out.println(" ________ EQUIPAMENTOS _________");
+        System.out.println("| 0 - Sair                      |");
+        if (permis == 1 || permis == 2){
             System.out.println("| 1 - Listar                    |");
             System.out.println("| 2 - Cadastrar                 |");
+            if (permis == 2 ){
             System.out.println("| 3 - Editar                    |");
             System.out.println("| 4 - Excluir                   |");
-            System.out.println("|_______________________________|");
-            System.out.print(" Opção: ");  
+        }else if (permis == 0 ){
+            System.out.println("| Opão invalida Acesso Negado ! |");
+            }
+                
+        System.out.println("|_______________________________|");
+        System.out.print(" Opção: ");  
        }
-    public static void subMenuColaborador(){
-            System.out.println("");
+    } 
+    public static void subMenuColaborador(int permis){
             System.out.println(" _________ COLABORADOR _________"); 
             System.out.println("| 0 - Sair                      |");
+            if (permis == 1 || permis == 2){
             System.out.println("| 1 - Listar                    |");
             System.out.println("| 2 - Cadastrar                 |");
+                if (permis == 2 ){
             System.out.println("| 3 - Editar                    |");
             System.out.println("| 4 - Excluir                   |");
+            }else if (permis == 0 ){
+                 System.out.println("| Opão invalida Acesso Negado ! |");
+            }
+            }
             System.out.println("|_______________________________|");
             System.out.print(" Opção: ");     
     }
-    public static void subMenuTipoColaborador(){
-            System.out.println("");
+    public static void subMenuTipoColaborador(int permis){
             System.out.println(" _________ COLABORADOR _________"); 
             System.out.println("| 0 - Sair                      |");
+            if (permis == 1 || permis == 2){
             System.out.println("| 1 - Comun                     |");
             System.out.println("| 2 - Diretor                   |");
             System.out.println("| 3 - Administrador             |");
+            }else if (permis == 0 ){
+                 System.out.println("| Opão invalida Acesso Negado ! |");
+            }
+            
             System.out.println("|_______________________________|");
             System.out.print(" Opção: ");     
     }/*
@@ -180,10 +207,10 @@ public class SistemaReserva {
             SistemaReserva.limpaTela();
             System.out.println("|        SENHA INCORRETA        |");
         }
-        }
- 
+         
          
         while (run) {
+            
             //MENU PRINCIPAL
             
             int op = teclado.nextInt();
@@ -196,7 +223,7 @@ public class SistemaReserva {
                 
                 case 1:
                     //SUB MENU RESERVA
-                    SistemaReserva.subMenuReserva();
+                    SistemaReserva.subMenuReserva(permis);
                     int op1 = teclado.nextInt();
                     switch (op1){
                         case 0:
@@ -292,7 +319,7 @@ public class SistemaReserva {
                             
                 case 2:
                     //SUB MENU EQUIPAMENTOS
-                    SistemaReserva.subMenuEquipamentos();
+                    SistemaReserva.subMenuEquipamentos(permis);
                     int op2 = teclado.nextInt();
                     switch (op2){
                         case 0:
@@ -389,7 +416,7 @@ public class SistemaReserva {
 
                     //==============================================================
                     
-                    SistemaReserva.subMenuColaborador();
+                    SistemaReserva.subMenuColaborador(permis);
                     int id=0;
                     int op3 = teclado.nextInt();
                     switch (op3){
@@ -415,7 +442,7 @@ public class SistemaReserva {
                             int op5=0;
                             String name = null, pass=null;
                             while(op5<1||op5>=3){
-                                SistemaReserva.subMenuTipoColaborador();
+                                SistemaReserva.subMenuTipoColaborador(permis);
                             op5 = teclado.nextInt();
                             if (op5==0){
                                 break;
@@ -558,5 +585,6 @@ public class SistemaReserva {
                     System.out.println("Opção Invalida");
             }
     }
+}
 }
 }
