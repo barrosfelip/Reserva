@@ -126,24 +126,8 @@ public class SistemaReserva {
             
             System.out.println("|_______________________________|");
             System.out.print(" Opção: ");     
-    }/*
-    /*
-    public static void cadastrarColaborador(String name , String user , boolean adm,String pass) throws IOException{
-        try ( // ================== ESCREVER EM TXT ===========================
-            FileWriter arq = new FileWriter("C:\\Users\\Pedro Henrique\\Google Drive\\Java\\POO\\Reserva\\Arquivo\\colaborador.txt",true)) {
-            PrintWriter gravarArq = new PrintWriter(arq);
-            gravarArq.printf(name+","+user+","+adm+","+pass+"%n");
-            //==============================================================
-        }
     }
-    public static void cadastrarEquipamento(int patrimonio , String nome) throws IOException{
-        try ( // ================== ESCREVER EM TXT ===========================
-                FileWriter arq = new FileWriter("C:\\Users\\Pedro Henrique\\Google Drive\\Java\\POO\\Reserva\\Arquivo\\equipamento.txt",true)) {
-            PrintWriter gravarArq = new PrintWriter(arq);
-            gravarArq.printf(patrimonio+","+nome+"%n");
-            //==============================================================
-        }
-    }  */
+    
 // ===================== MAIN ==============================
     
     public static void main(String[] args) throws IOException {
@@ -165,8 +149,9 @@ public class SistemaReserva {
         listaPessoa.add(new Pessoa("Pedro", "pedroh", 0));
         listaPessoa.add(new Pessoa("Thiago", "thiagop", 1));
         listaPessoa.add(new Pessoa("Felipe", "felipel", 2));
+        listaPessoa.add(new Pessoa("Juan", "1", 2));
         
-       
+        
         listaDatashow.add( new Datashow(18000, "Epson",false, 3000));
         listaDatashow.add( new Datashow(18001, "Epson",false, 3000));
         listaDatashow.add( new Datashow(18002, "Epson",false, 2400));
@@ -181,36 +166,31 @@ public class SistemaReserva {
         listaReserva.add( new Reserva(listaPessoa.get(1),listaNotebook.get(3), listaDatashow.get(3), dataRetirada, dataEntrega,"nd"));
         listaReserva.add( new Reserva(listaPessoa.get(2),listaNotebook.get(1), dataRetirada, dataEntrega,"n"));
         
-        boolean login = true, run = true;
+        boolean login = true, run = false;
+        int permis =0;
+        int matri=0;
         SistemaReserva.limpaTela();
         while(login){ 
         SistemaReserva.login();
         String key = teclado.next();
-        int permis =0;
         for (int i = 0; i < listaPessoa.size(); i++) {
             if (key.equals(listaPessoa.get(i).getRedeUser())) {
-               permis = (listaPessoa.get(i).getPermis()); 
+               permis = (listaPessoa.get(i).getPermis());
+               matri=i;
                login = false;
-               
+               run = true;
             }
-               
             if (key.equals("0")){
                 login= false;
                 run=false;  
-            } 
-                
-        }
-        SistemaReserva.menu(permis);
-        
+            }  }
         
         if(login==true){
-            SistemaReserva.limpaTela();
             System.out.println("|        SENHA INCORRETA        |");
-        }
-         
+        }        }
          
         while (run) {
-            
+            SistemaReserva.menu(permis);
             //MENU PRINCIPAL
             
             int op = teclado.nextInt();
@@ -235,15 +215,14 @@ public class SistemaReserva {
                                 System.out.println("Nenhuma RESERVA ");
 
                             }else{  
-                                System.out.print("       Nome       ");
+                                System.out.print("    Nome    ");
                                 System.out.print("DataShow  ");
                                 System.out.print("Notebook  ");
                                 System.out.print("Retirada   ");
                                 System.out.println("Entrega");
                                 for (int i = 0; i < listaReserva.size(); i++) {
                                     listaReserva.get(i).dadosReserva();
-                                    
-     
+             
                                 }
                             } 
                             
@@ -270,26 +249,58 @@ public class SistemaReserva {
                                         System.out.println("Nenhum Notebook Disponivel");
                                                                        
                                     }else{  
-                                        System.out.print("Patr.     ");
+                                        System.out.print("Num. ");
+                                        System.out.print("  Patr.   ");
                                         System.out.print("Nome           ");
                                         System.out.println("Proc.");
                                         
                                         for (int i = 0; i < listaNotebook.size(); i++) {
                                             if (listaNotebook.get(i).getReservaStatus() == false) {                                               
+                                                System.out.print(" " + i + " \t");
                                                 System.out.print(listaNotebook.get(i).getPatrimonio()+"     ");
                                                 System.out.print(listaNotebook.get(i).getNome()+"         ");
                                                 System.out.println(listaNotebook.get(i).getProcessador()+"");
-                                                
-                                            }
+                                                                 }
                                         }
+                                        
+                                        System.out.println("Digite o numero do equipamento.");
+                                        int eq = teclado.nextInt();
+                                        listaReserva.add( new Reserva(listaPessoa.get(matri), listaNotebook.get(eq), dataRetirada, dataEntrega,"n"));                           
+                                        System.out.println("Reserva ok!");
+                                        
+                                        
+                                        
                                     }
+                                                                     
+                                    
                                     // FIM CRIAR RESERVA NOTEBOOK
                                     break;
                                 case 2:
                                     // CRIAR RESERVA DATASHOW
                                     System.out.println(" _____ DATASHOW DISPONIVEl _____"); 
-                                    
-                                    
+                                    if (listaDatashow.isEmpty()){
+                                        System.out.println("Nenhum Datashow Disponivel");
+                                                                       
+                                    }else{  
+                                        System.out.print("Num. ");
+                                        System.out.print("  Patr.   ");
+                                        System.out.print("Nome           ");
+                                        System.out.println("Proc.");
+                                        
+                                        for (int i = 0; i < listaDatashow.size(); i++) {
+                                            if (listaDatashow.get(i).getReservaStatus() == false) {                                               
+                                                System.out.print(" " + i + " \t");
+                                                System.out.print(listaDatashow.get(i).getPatrimonio()+"     ");
+                                                System.out.print(listaDatashow.get(i).getNome()+"         ");
+                                                System.out.println(listaDatashow.get(i).getLumens());
+                                                                 }
+                                        }
+                                        
+                                        System.out.println("Digite o numero do equipamento.");
+                                        int eq = teclado.nextInt();
+                                        listaReserva.add( new Reserva(listaPessoa.get(matri), listaDatashow.get(eq), dataRetirada, dataEntrega,"d"));                           
+                                        System.out.println("Reserva ok!");
+                                    }
                                     // FIM CRIAR RESERVA DATASHOW
                                    
                                     break;
@@ -569,6 +580,8 @@ public class SistemaReserva {
                             
                                        break;
 //FIM EDITAR SENHA
+                                    case 4 :
+                                       
                                     default:        
                                 
                                 
@@ -587,4 +600,4 @@ public class SistemaReserva {
     }
 }
 }
-}
+

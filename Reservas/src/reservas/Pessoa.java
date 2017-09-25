@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 
 public class Pessoa {
+
+    static Pessoa get(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
         
-    public ArrayList<Pessoa> listaPessoa = new ArrayList<>();
     private static int sequence = 0;
     private int id;
     private String nome;

@@ -12,8 +12,7 @@ public class Reserva {
     private Date dataEntrega;
     private String tipo;
     
-    
-     
+
     public void criarReservaDatashow(Reserva reserva){
         reserva.getDatashow().setReservaStatus(true);   
     }
@@ -22,10 +21,11 @@ public class Reserva {
         reserva.getNotebook().setReservaStatus(true);   
     }
      
-     
     public void dadosReserva(){
         
-        System.out.print(getColaborador().getNome()+"");
+        
+        System.out.print(getColaborador().getNome()+"\t");
+      
         if (getTipo() == "d"){
             System.out.print("     "+getDatashow().getPatrimonio()+"              ");
         
@@ -38,16 +38,11 @@ public class Reserva {
             System.out.print("     "+getDatashow().getPatrimonio()+"     ");
             System.out.print(getNotebook().getPatrimonio()+"    ");
         
-        
         }
         dataRetirada();
         System.out.print(" ");
         dataEntrega();
-    
-    
     }
-
-
     
     public void dataRetirada(){
         
